@@ -18,6 +18,7 @@ class UTP_WeaponComponent;
 struct FInputActionValue;
 
 class UPlayerHUD;
+class UMyFirstUserWidget;
 
 
 DECLARE_DELEGATE_TwoParams(FOnPlayerHealthChanged, int /* NewHealth */, int /* MaxHealth */);
