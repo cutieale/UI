@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/WidgetTree.h"
+#include "Blueprint/UserWidget.h"
 #include "SkillTree.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class UTAD_UI_FPS_API USkillTree : public UWidgetTree
+class UTAD_UI_FPS_API USkillTree : public UUserWidget
 {
 	GENERATED_BODY()
 	

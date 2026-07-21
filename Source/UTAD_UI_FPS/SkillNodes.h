@@ -7,6 +7,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Components/ProgressBar.h"
+#include "Components/Image.h"
 #include "SkillNodes.generated.h"
 
 /**
@@ -26,6 +27,9 @@ public:
 
 		FString sId;
 		FString sParentId;
+		
+		class USkillTree* pSkill;
+		USkillNodes* pNodesWidget;
 	};
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
@@ -37,6 +41,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UTextBlock> TXT_SkillName;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<UImage> IMG_BGColor;
+
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 	UFUNCTION()
@@ -47,4 +54,10 @@ public:
 	void Hover();
 	UFUNCTION()
 	void Unhover();
+
+	float m_fAcceptPressTime = 2.f;
+	float m_fPressTime;
+
+	bool m_bPressed;
+	bool m_bHovered;
 };
