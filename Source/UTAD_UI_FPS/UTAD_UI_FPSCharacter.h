@@ -18,8 +18,7 @@ class UTP_WeaponComponent;
 struct FInputActionValue;
 
 class UPlayerHUD;
-class UMyFirstUserWidget;
-class USkillTree;
+
 
 DECLARE_DELEGATE_TwoParams(FOnPlayerHealthChanged, int /* NewHealth */, int /* MaxHealth */);
 DECLARE_DELEGATE_OneParam(FOnTotalBulletsChanged, int /* TotalBullets */);
@@ -62,8 +61,6 @@ protected:
 
 public:
 		
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* OpenTreeAction;
 
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -127,9 +124,8 @@ public:
 	FOnPlayerHealthChanged OnPlayerHealthChanged;
 	FOnTotalBulletsChanged OnTotalBulletsChanged;
 
-	/****************************************************/
 	/************************ UI ************************/
-	/****************************************************/
+	
 
 	/** Widget Blueprints that will be used to create the instances */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI)
@@ -138,8 +134,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI)
 	TSubclassOf<UMyFirstUserWidget> GameOverWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI)
-	TSubclassOf<USkillTree> SkillTree;
 
 protected:
 	/** Called for movement input */
@@ -148,7 +142,6 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
-	void OpenSkillTree(const FInputActionValue& Value);
 
 protected:
 	// APawn interface
@@ -173,7 +166,5 @@ private:
 	UPlayerHUD* PlayerHUDInstance;
 
 	UMyFirstUserWidget* GameOverInstance;
-
-	USkillTree* m_pSkillTree;
 };
 
