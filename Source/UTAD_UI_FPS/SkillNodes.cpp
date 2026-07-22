@@ -23,6 +23,7 @@ void USkillNodes::SetData(sSkillData* Data)
 		TXT_SkillName->SetText(FText::FromString(m_Data->sName));
 	}
 		PB_SkillUpgrade->SetPercent(0);
+		m_fPressTime = 0.f;
 }
 void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
@@ -67,22 +68,24 @@ void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			return;
 		}
 	
-		m_fPressTime += InDeltaTime;
-		if(m_Data->bLocked)
-		{
-			if (PB_SkillUpgrade)
-			{
-				PB_SkillUpgrade->SetPercent(FMath::Min(2.f, m_fPressTime / m_fAcceptPressTime));
-			}
-			if (m_fPressTime >= m_fAcceptPressTime && m_Data->pSkill)
+		//m_fPressTime += InDeltaTime;
+		
+		//PB_SkillUpgrade->SetPercent(FMath::Min(2.f, m_fPressTime / m_fAcceptPressTime));
+			
+		
+		/*	if (m_fPressTime >= m_fAcceptPressTime)
 			{
 				m_Data->pSkill->Acquire(m_Data->sId);
+				m_Data->bLocked = false;
 			}
-			else if(m_fPressTime < m_fAcceptPressTime && m_Data->pSkill)
+			else if(m_Data->bLocked && m_Data->pSkill)
 			{
-				PB_SkillUpgrade->SetPercent(0);
-			}
-		}
+				if (TXT_SkillName)
+				{
+					TXT_SkillName->SetText(FText::FromString(m_Data->sName + " SKILL TOO EXPENSIVE"));
+				}
+			}*/
+		
 		
 	}
 }
