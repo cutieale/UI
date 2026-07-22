@@ -18,6 +18,7 @@ class UTAD_UI_FPS_API USkillNodes : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+
 	struct sSkillData
 	{
 		bool bLocked;
@@ -31,6 +32,8 @@ public:
 		class USkillTree* pSkill;
 		USkillNodes* pNodesWidget;
 	};
+	sSkillData* m_Data;
+public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UButton> BTN_SkillNode;
@@ -42,10 +45,12 @@ public:
 	TObjectPtr<UTextBlock> TXT_SkillName;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	TObjectPtr<UImage> IMG_BGColor;
+	TObjectPtr<UImage> IMG_BGColorLocked;
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<UImage> IMG_BGColorUnlocked;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
+	void SetData(sSkillData* Data);
 	UFUNCTION()
 	void Press();
 	UFUNCTION()

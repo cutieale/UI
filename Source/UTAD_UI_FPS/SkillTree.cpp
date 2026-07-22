@@ -3,3 +3,11 @@
 
 #include "SkillTree.h"
 
+void USkillTree::IsUnlocked(FString sId)
+{
+	return;
+}
+
+void USkillTree::Acquire(FString sId)
+{
+}
