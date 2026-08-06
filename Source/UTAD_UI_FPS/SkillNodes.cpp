@@ -23,7 +23,6 @@ void USkillNodes::SetData(sSkillData* Data)
 		TXT_SkillName->SetText(FText::FromString(m_Data->sName));
 	}
 		PB_SkillUpgrade->SetPercent(0);
-		m_fPressTime = 0.f;
 }
 void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
@@ -68,12 +67,12 @@ void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			return;
 		}
 	
-		//m_fPressTime += InDeltaTime;
+		/*m_fPressTime += InDeltaTime;
 		
-		//PB_SkillUpgrade->SetPercent(FMath::Min(2.f, m_fPressTime / m_fAcceptPressTime));
+		PB_SkillUpgrade->SetPercent(FMath::Min(2.f, m_fPressTime / m_fAcceptPressTime));
 			
 		
-		/*	if (m_fPressTime >= m_fAcceptPressTime)
+			if (m_fPressTime >= m_fAcceptPressTime)
 			{
 				m_Data->pSkill->Acquire(m_Data->sId);
 				m_Data->bLocked = false;

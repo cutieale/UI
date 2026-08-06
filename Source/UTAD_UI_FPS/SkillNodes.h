@@ -49,10 +49,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UImage> IMG_BGColorUnlocked;
 
-protected:
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	void SetData(sSkillData* Data);
+
+protected:
 	UFUNCTION()
 	void Press();
 	UFUNCTION()
@@ -62,6 +63,7 @@ protected:
 	UFUNCTION()
 	void Unhover();
 
+public:
 	float m_fAcceptPressTime = 2.f;
 	float m_fPressTime = 0.f;
 
