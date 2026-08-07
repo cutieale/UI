@@ -11,6 +11,7 @@
 // UI
 #include "Blueprint/UserWidget.h"
 #include "UI/PlayerHUD.h"
+#include "SkillTree.h"
 #include "MyFirstUserWidget.h"
 
 
@@ -68,6 +69,8 @@ void AUTAD_UI_FPSCharacter::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("Player HUD Widget not assigned to UTAD_UI_FPSCharacter"));
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player HUD Widget not assigned to UTAD_UI_FPSCharacter"));
 	}
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -86,6 +89,9 @@ void AUTAD_UI_FPSCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::Look);
+		// Open Skill Tree
+		EnhancedInputComponent->BindAction(OpenTreeAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::OpenSkillTree);
+	
 
 	}
 }
@@ -191,3 +197,14 @@ void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* Weap
 {
 	AttachedWeaponComponent = WeaponComponent;
 }
+
+void AUTAD_UI_FPSCharacter::OpenSkillTree(const FInputActionValue& Value)
+{
+	
+	if (SkillTreeWidget)
+	{
+		SkillTreeInstance->ShowTree();
+	}
+
+}
+

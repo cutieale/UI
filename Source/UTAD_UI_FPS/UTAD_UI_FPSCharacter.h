@@ -19,6 +19,7 @@ struct FInputActionValue;
 
 class UPlayerHUD;
 class UMyFirstUserWidget;
+class USkillTree;
 
 
 DECLARE_DELEGATE_TwoParams(FOnPlayerHealthChanged, int /* NewHealth */, int /* MaxHealth */);
@@ -53,6 +54,9 @@ class AUTAD_UI_FPSCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
 
+	//** Open Skill Tree Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* OpenTreeAction;
 	
 public:
 	AUTAD_UI_FPSCharacter();
@@ -131,6 +135,8 @@ public:
 	/** Widget Blueprints that will be used to create the instances */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI)
 	TSubclassOf<UPlayerHUD> PlayerHUDWidget;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI)
+	TSubclassOf<USkillTree> SkillTreeWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI)
 	TSubclassOf<UMyFirstUserWidget> GameOverWidget;
@@ -148,6 +154,7 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	// End of APawn interface
+	void OpenSkillTree(const FInputActionValue& Value);
 
 public:
 	/** Returns Mesh1P subobject **/
@@ -167,5 +174,7 @@ private:
 	UPlayerHUD* PlayerHUDInstance;
 
 	UMyFirstUserWidget* GameOverInstance;
+
+	USkillTree* SkillTreeInstance;
 };
 
