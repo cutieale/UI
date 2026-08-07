@@ -33,7 +33,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UTextBlock> TXT_Points;
-	float m_fPoints = 0.f;
+	float m_fPoints = 500.f;
 
 	bool IsUnlocked(FString sId);
 	bool Acquire(FString sId);
