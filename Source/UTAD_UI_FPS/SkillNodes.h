@@ -31,9 +31,9 @@ public:
 		
 		class USkillTree* pSkill;
 		USkillNodes* pNodesWidget;
+		FVector2D vPosition;
 	};
 	sSkillData* m_Data;
-public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UButton> BTN_SkillNode;
@@ -53,7 +53,6 @@ public:
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	void SetData(sSkillData* Data);
 
-protected:
 	UFUNCTION()
 	void Press();
 	UFUNCTION()
@@ -63,9 +62,8 @@ protected:
 	UFUNCTION()
 	void Unhover();
 
-public:
 	float m_fAcceptPressTime = 2.f;
-	float m_fPressTime = 0.f;
+	float m_fPressTime;
 
 	bool m_bPressed;
 	bool m_bHovered;
