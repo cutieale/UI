@@ -17,7 +17,7 @@ class UTAD_UI_FPS_API USkillTree : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TSubclassOf<USkillNodes> SkillNodeClass;
 
 	TMap<FString, USkillNodes::sSkillData> m_SkillDataMap;

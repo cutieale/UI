@@ -7,12 +7,12 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Components/ProgressBar.h"
-#include "Components/Image.h"
 #include "SkillNodes.generated.h"
 
 /**
  * 
  */
+class USkillTree;
 UCLASS()
 class UTAD_UI_FPS_API USkillNodes : public UUserWidget
 {
@@ -44,10 +44,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UTextBlock> TXT_SkillName;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	TObjectPtr<UImage> IMG_BGColorLocked;
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	TObjectPtr<UImage> IMG_BGColorUnlocked;
 
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
