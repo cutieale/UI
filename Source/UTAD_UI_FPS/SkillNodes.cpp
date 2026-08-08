@@ -17,12 +17,13 @@ void USkillNodes::SetData(sSkillData* Data)
 	BTN_SkillNode->SetIsEnabled(!m_Data->bLocked);
 	BTN_SkillNode->SetVisibility(ESlateVisibility::Visible);
 	BTN_SkillNode->SetColorAndOpacity(m_Data->bLocked ? FLinearColor::Red : FLinearColor::Green);
+	PB_SkillUpgrade->SetPercent(0);
 	
 	if (!m_Data->bLocked)
 	{
 		TXT_SkillName->SetText(FText::FromString(m_Data->sName));
+		PB_SkillUpgrade->SetVisibility(ESlateVisibility::Hidden);
 	}
-		PB_SkillUpgrade->SetPercent(0);
 }
 void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
@@ -90,6 +91,10 @@ void USkillNodes::Press()
 	m_bPressed = true;
 	m_fPressTime = 0.f;
 	PB_SkillUpgrade->SetPercent(0.f);
+	if(m_fPressTime >= m_fAcceptPressTime)
+	{
+		PB_SkillUpgrade->SetPercent(1.f);
+	}
 }
 void USkillNodes::Release()
 {
