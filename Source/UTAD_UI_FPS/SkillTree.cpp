@@ -29,11 +29,11 @@ bool USkillTree::Acquire(FString sId)
 			m_fPoints -= pData->fRequirement;
 			pData->bLocked = false;
 			return true;
+		}
 			if(TXT_Points)
 			{
 				TXT_Points->SetText(FText::FromString(FString::SanitizeFloat(m_fPoints)));
 			}
-		}
 	}
 	return false;
 }
