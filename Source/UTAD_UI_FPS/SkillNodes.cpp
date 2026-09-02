@@ -126,3 +126,9 @@ void USkillNodes::Unhover()
 		TXT_SkillName->SetText(FText::FromString(m_Data->sName));
 	}
 }
+
+void USkillNodes::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+}

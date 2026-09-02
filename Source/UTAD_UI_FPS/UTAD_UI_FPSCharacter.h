@@ -16,7 +16,7 @@ class UAnimMontage;
 class USoundBase;
 class UTP_WeaponComponent;
 struct FInputActionValue;
-
+class APlayerController;
 class UPlayerHUD;
 class UMyFirstUserWidget;
 class USkillTree;
@@ -37,6 +37,8 @@ class AUTAD_UI_FPSCharacter : public ACharacter
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	APlayerController* PlayerController;
 
 	/** Weapon component that is attached */
 	UPROPERTY(VisibleDefaultsOnly, Category = Weapon)
@@ -141,7 +143,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI)
 	TSubclassOf<UMyFirstUserWidget> GameOverWidget;
 
-
+	bool bIsSkillTreeOpen = false;
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -163,6 +165,7 @@ public:
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 	/** Returns AttachedWeaponComponent subobject **/
 	UTP_WeaponComponent* GetAttachedWeaponComponent() const { return AttachedWeaponComponent; }
+	APlayerController* GetPlayerController() const { return PlayerController; }	
 
 private:
 

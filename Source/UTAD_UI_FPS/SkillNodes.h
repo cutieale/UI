@@ -12,6 +12,7 @@
 /**
  * 
  */
+class UButton;
 class USkillTree;
 UCLASS()
 class UTAD_UI_FPS_API USkillNodes : public UUserWidget
@@ -35,7 +36,7 @@ public:
 	};
 	sSkillData* m_Data;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
 	TObjectPtr<UButton> BTN_SkillNode;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
@@ -63,4 +64,7 @@ public:
 
 	bool m_bPressed;
 	bool m_bHovered;
+
+protected:
+	virtual void NativeConstruct() override;
 };

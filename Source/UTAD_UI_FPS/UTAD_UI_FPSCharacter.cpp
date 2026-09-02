@@ -48,7 +48,7 @@ void AUTAD_UI_FPSCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	if (PlayerController)
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
@@ -69,7 +69,17 @@ void AUTAD_UI_FPSCharacter::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("Player HUD Widget not assigned to UTAD_UI_FPSCharacter"));
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player HUD Widget not assigned to UTAD_UI_FPSCharacter"));
 	}
-
+	if(SkillTreeWidget)
+	{
+		SkillTreeInstance = CreateWidget<USkillTree>(GetWorld(), SkillTreeWidget);
+		SkillTreeInstance->AddToViewport();
+		SkillTreeInstance->HideTree();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Skill Tree Widget not assigned to UTAD_UI_FPSCharacter"));
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Skill Tree Widget not assigned to UTAD_UI_FPSCharacter"));
+	}
 
 }
 
@@ -90,7 +100,7 @@ void AUTAD_UI_FPSCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::Look);
 		// Open Skill Tree
-		EnhancedInputComponent->BindAction(OpenTreeAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::OpenSkillTree);
+		EnhancedInputComponent->BindAction(OpenTreeAction, ETriggerEvent::Started, this, &AUTAD_UI_FPSCharacter::OpenSkillTree);
 	
 
 	}
@@ -203,7 +213,20 @@ void AUTAD_UI_FPSCharacter::OpenSkillTree(const FInputActionValue& Value)
 	
 	if (SkillTreeWidget)
 	{
-		SkillTreeInstance->ShowTree();
+		if (bIsSkillTreeOpen)
+		{
+			SkillTreeInstance->HideTree();
+			bIsSkillTreeOpen = false;
+			PlayerController->SetInputMode(FInputModeGameOnly());
+			PlayerController->bShowMouseCursor = false;
+		}
+		else
+		{
+			SkillTreeInstance->ShowTree();
+			bIsSkillTreeOpen = true;
+			PlayerController->SetInputMode(FInputModeUIOnly());
+			PlayerController->bShowMouseCursor = true;
+		}
 	}
 
 }
