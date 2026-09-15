@@ -14,27 +14,19 @@
  */
 class UButton;
 class USkillTree;
+
+UENUM()
+enum class ESkillType : uint8
+{
+	Health UMETA(DisplayName = "HEALTH"),
+	Damage UMETA(DisplayName = "DAMAGE"),
+	Movement UMETA(DisplayName = "MOVEMENT")
+};
 UCLASS()
 class UTAD_UI_FPS_API USkillNodes : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-
-	struct sSkillData
-	{
-		bool bLocked;
-		float fRequirement;
-
-		FString sName;
-
-		FString sId;
-		FString sParentId;
-		
-		class USkillTree* pSkill;
-		USkillNodes* pNodesWidget;
-		FVector2D vPosition;
-	};
-	sSkillData* m_Data;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
 	TObjectPtr<UButton> BTN_SkillNode;
@@ -45,10 +37,23 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UTextBlock> TXT_SkillName;
 
+	UPROPERTY(EditAnywhere, Category = "TYPE")
+	ESkillType m_eSkillType;
+
+	UPROPERTY(EditAnywhere, Category = "ID")
+	FString m_sSkillId;
+
+	UPROPERTY(EditAnywhere, Category = "NAME")
+	FString m_sSkillName;
+
+	UPROPERTY(EditAnywhere, Category = "COST")
+	int32 m_iSkillCost;
+
+	bool bLocked = true;
 
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	void SetData(sSkillData* Data);
+
 
 	UFUNCTION()
 	void Press();
@@ -58,6 +63,8 @@ public:
 	void Hover();
 	UFUNCTION()
 	void Unhover();
+	UFUNCTION()
+	 void Unlock();
 
 	float m_fAcceptPressTime = 2.f;
 	float m_fPressTime;
@@ -65,6 +72,5 @@ public:
 	bool m_bPressed;
 	bool m_bHovered;
 
-protected:
 	virtual void NativeConstruct() override;
 };

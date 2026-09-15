@@ -3,25 +3,24 @@
 
 #include "SkillNodes.h"
 #include "SkillTree.h"
+#include "Components/Button.h"	
 
 
-
-void USkillNodes::SetData(sSkillData* Data)
+void USkillNodes::NativeConstruct()
 {
+	Super::NativeConstruct();
+
 	BTN_SkillNode->OnPressed.AddDynamic(this, &USkillNodes::Press);
 	BTN_SkillNode->OnReleased.AddDynamic(this, &USkillNodes::Release);
 	BTN_SkillNode->OnHovered.AddDynamic(this, &USkillNodes::Hover);
 	BTN_SkillNode->OnUnhovered.AddDynamic(this, &USkillNodes::Unhover);
 
-	m_Data = Data;
-	BTN_SkillNode->SetIsEnabled(!m_Data->bLocked);
 	BTN_SkillNode->SetVisibility(ESlateVisibility::Visible);
-	BTN_SkillNode->SetColorAndOpacity(m_Data->bLocked ? FLinearColor::Red : FLinearColor::Green);
 	PB_SkillUpgrade->SetPercent(0);
 	
-	if (!m_Data->bLocked)
+	if (!bLocked)
 	{
-		TXT_SkillName->SetText(FText::FromString(m_Data->sName));
+		TXT_SkillName->SetText(FText::FromString(m_sSkillName));
 		PB_SkillUpgrade->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
@@ -29,62 +28,86 @@ void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 
-	if (m_bPressed )
+	if (m_bPressed)
 	{
-		if (!m_Data->bLocked)
+		if (!bLocked)
 		{
-			if (TXT_SkillName)
+			switch (m_eSkillType)
 			{
-				TXT_SkillName->SetText(FText::FromString(m_Data->sName + " SKILL ALREADY UNLOCKED"));
+				case ESkillType::Health:
+					if (TXT_SkillName)
+					{
+						TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL ALREADY UNLOCKED"));
+					}
+					m_bPressed = false;
+					return;
+					break;
+				case ESkillType::Damage:
+					if (TXT_SkillName)
+					{
+						TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL ALREADY UNLOCKED"));
+					}
+					m_bPressed = false;
+					return;
+					break;
+				case ESkillType::Movement:
+					if (TXT_SkillName)
+					{
+						TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL ALREADY UNLOCKED"));
+					}
+					m_bPressed = false;
+					return;
+					break;
+			}
+			bLocked = false;
+		}
+
+		if (bLocked)
+		{
+			switch (m_eSkillType)
+			{
+				case ESkillType::Health:
+					if (TXT_SkillName)
+					{
+						TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL LOCKED"));
+					}
+					break;
+				case ESkillType::Damage:
+					if (TXT_SkillName)
+					{
+						TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL LOCKED"));
+					}
+					break;
+				case ESkillType::Movement:
+					if (TXT_SkillName)
+					{
+						TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL LOCKED"));
+					}
+					break;
+				
 			}
 			m_bPressed = false;
 			return;
 		}
-	
-		if(m_Data->bLocked && !m_Data->pSkill)
+		if (!bLocked)
 		{
-			if (TXT_SkillName)
-			{
-				TXT_SkillName->SetText(FText::FromString(m_Data->sName + " SKILL LOCKED"));
-			}
-			m_bPressed = false;
-			return;
-		}
-		if(!m_Data->bLocked && m_Data->pSkill)
-		{
-			m_Data->pSkill->IsUnlocked(m_Data->sParentId);
-			if (TXT_SkillName)
-			{
-				TXT_SkillName->SetText(FText::FromString(m_Data->sName + " NEEDS PREVIOUS SKILL UNLOCKED"));
-			}
-			m_bPressed = false;
-		}
-		{
-			if (TXT_SkillName)
-			{
-				TXT_SkillName->SetText(FText::FromString(m_Data->sName + " SKILL UNLOCKED"));
-			}
-			m_bPressed = false;
-			return;
-		}
-	
-		/*m_fPressTime += InDeltaTime;
-		
-		PB_SkillUpgrade->SetPercent(FMath::Min(2.f, m_fPressTime / m_fAcceptPressTime));*/
 			
-		
-		/*if (m_fPressTime >= m_fAcceptPressTime)
+			if (TXT_SkillName)
+			{
+				TXT_SkillName->SetText(FText::FromString(m_sSkillName + " NEEDS PREVIOUS SKILL UNLOCKED"));
+			}
+			m_bPressed = false;
+		}
 		{
-			if(m_Data->pSkill->Acquire(m_Data->sId))
+			if (TXT_SkillName)
 			{
-				m_Data->bLocked = false;
+				TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL UNLOCKED"));
 			}
-			else if(TXT_SkillName)
-			{
-				TXT_SkillName->SetText(FText::FromString(m_Data->sName + " SKILL TOO EXPENSIVE"));
-			}
-		}*/
-	}
+			m_bPressed = false;
+			return;
+		}
+	
+	}	
 }
 void USkillNodes::Press()
 {
@@ -93,6 +116,7 @@ void USkillNodes::Press()
 	PB_SkillUpgrade->SetPercent(0.f);
 	if(m_fPressTime >= m_fAcceptPressTime)
 	{
+		Unlock();
 		PB_SkillUpgrade->SetPercent(1.f);
 	}
 }
@@ -104,18 +128,18 @@ void USkillNodes::Release()
 }
 void USkillNodes::Hover()
 {
-	if(m_Data->bLocked)
+	if(bLocked)
 	{
 		if (TXT_SkillName)
 		{
-			TXT_SkillName->SetText(FText::FromString(m_Data->sName + " $ " + FString::SanitizeFloat(m_Data->fRequirement)));
+			TXT_SkillName->SetText(FText::FromString(m_sSkillName + " $ " + FString::SanitizeFloat(m_iSkillCost)));
 		}
 	}
-	else if (!m_Data->bLocked)
+	else if (!bLocked)
 	{
 		if (TXT_SkillName)
 		{
-			TXT_SkillName->SetText(FText::FromString(m_Data->sName));
+			TXT_SkillName->SetText(FText::FromString(m_sSkillName));
 		}
 	}
 }
@@ -123,12 +147,20 @@ void USkillNodes::Unhover()
 {
 	if(TXT_SkillName)
 	{
-		TXT_SkillName->SetText(FText::FromString(m_Data->sName));
+		TXT_SkillName->SetText(FText::FromString(m_sSkillName));
 	}
 }
 
-void USkillNodes::NativeConstruct()
+void USkillNodes::Unlock()
 {
-	Super::NativeConstruct();
-
+	FButtonStyle NewButtonStyle = BTN_SkillNode->GetStyle();
+	if (!bLocked)
+	{
+		NewButtonStyle.Normal.TintColor = FSlateColor(FLinearColor::Green);
+	}
+	if (bLocked)
+	{
+		NewButtonStyle.Hovered.TintColor = FSlateColor(FLinearColor::Red);
+	}
 }
+

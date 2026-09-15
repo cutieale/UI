@@ -100,7 +100,7 @@ void AUTAD_UI_FPSCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::Look);
 		// Open Skill Tree
-		EnhancedInputComponent->BindAction(OpenTreeAction, ETriggerEvent::Started, this, &AUTAD_UI_FPSCharacter::OpenSkillTree);
+		EnhancedInputComponent->BindAction(OpenTreeAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::OpenSkillTree);
 	
 
 	}

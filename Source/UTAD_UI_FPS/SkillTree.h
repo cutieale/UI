@@ -31,21 +31,6 @@ public:
 	TObjectPtr<UCanvasPanel> CanvasPanel_SkillTree;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
-	TObjectPtr<UImage> IMG_Tree;
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
-	TObjectPtr<UImage> IMG_Line1;
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
-	TObjectPtr<UImage> IMG_Line2;
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
-	TObjectPtr<UImage> IMG_Line3;
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
-	TObjectPtr<UImage> IMG_Line4;
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
-	TObjectPtr<UImage> IMG_Line5;						
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
-	TObjectPtr<UImage> IMG_Line6;
-
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
 	TObjectPtr<UTextBlock> TXT_Points;
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "UI")
 	TObjectPtr<UTextBlock> TXT_SkillTree;
@@ -72,10 +57,6 @@ public:
 	float m_fPoints = 500.f;
 
 	bool IsUnlocked(FString sId);
-	bool Acquire(FString sId);
-
-	UFUNCTION()
-	void SetTree();
 	UFUNCTION()
 	void HideTree();
 	UFUNCTION()
@@ -84,8 +65,6 @@ public:
 protected:
 	virtual void NativeConstruct() override;
 
-private:
-	void SetNode(USkillNodes::sSkillData m_Data);
 
 
 };
