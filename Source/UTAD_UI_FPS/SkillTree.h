@@ -54,9 +54,6 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "UI")
 	TObjectPtr<USkillNodes> SN_Dmg3;
 
-	float m_fPoints = 500.f;
-
-	bool IsUnlocked(FString sId);
 	UFUNCTION()
 	void HideTree();
 	UFUNCTION()

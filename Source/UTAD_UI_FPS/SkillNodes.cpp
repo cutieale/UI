@@ -4,6 +4,9 @@
 #include "SkillNodes.h"
 #include "SkillTree.h"
 #include "Components/Button.h"	
+#include "Components/TextBlock.h"
+#include "Components/ProgressBar.h"
+#include "UTAD_UI_FPSCharacter.h"
 
 
 void USkillNodes::NativeConstruct()
@@ -89,24 +92,7 @@ void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			m_bPressed = false;
 			return;
 		}
-		if (!bLocked)
-		{
-			
-			if (TXT_SkillName)
-			{
-				TXT_SkillName->SetText(FText::FromString(m_sSkillName + " NEEDS PREVIOUS SKILL UNLOCKED"));
-			}
-			m_bPressed = false;
-		}
-		{
-			if (TXT_SkillName)
-			{
-				TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL UNLOCKED"));
-			}
-			m_bPressed = false;
-			return;
-		}
-	
+
 	}	
 }
 void USkillNodes::Press()
@@ -114,9 +100,30 @@ void USkillNodes::Press()
 	m_bPressed = true;
 	m_fPressTime = 0.f;
 	PB_SkillUpgrade->SetPercent(0.f);
-	if(m_fPressTime >= m_fAcceptPressTime)
+	if(m_fPressTime >= m_fAcceptPressTime && CH->m_iSkillPoints >= m_iSkillCost)
 	{
-		Unlock();
+		if (bLocked)
+		{
+			if(m_aPreviousSkills.Num() > 0)
+			{
+				for (USkillNodes* PreviousSkill : m_aPreviousSkills)
+				{
+					if (PreviousSkill && !PreviousSkill->bLocked)
+					{
+						bPreviousSkillUnlocked = true;
+						Unlock();
+						NativeTick(FGeometry(), 0.f);
+						TXT_SkillName->SetText(FText::FromString(m_sSkillName + " SKILL UNLOCKED"));
+						break;
+					}
+				}
+			}
+			else
+			{
+				bPreviousSkillUnlocked = false;
+				TXT_SkillName->SetText(FText::FromString(m_sSkillName + " NEEDS PREVIOUS SKILL UNLOCKED"));
+			}
+		}
 		PB_SkillUpgrade->SetPercent(1.f);
 	}
 }
@@ -153,6 +160,7 @@ void USkillNodes::Unhover()
 
 void USkillNodes::Unlock()
 {
+	CH->m_iSkillPoints -= m_iSkillCost;
 	FButtonStyle NewButtonStyle = BTN_SkillNode->GetStyle();
 	if (!bLocked)
 	{

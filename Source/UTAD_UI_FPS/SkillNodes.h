@@ -46,14 +46,16 @@ public:
 	UPROPERTY(EditAnywhere, Category = "NAME")
 	FString m_sSkillName;
 
+	UPROPERTY(EditAnywhere, Category = "PREV")
+	TArray<USkillNodes*> m_aPreviousSkills;
 	UPROPERTY(EditAnywhere, Category = "COST")
 	int32 m_iSkillCost;
 
 	bool bLocked = true;
-
+	bool bPreviousSkillUnlocked = false;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
+	class AUTAD_UI_FPSCharacter* CH;
 
 	UFUNCTION()
 	void Press();

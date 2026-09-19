@@ -144,6 +144,7 @@ public:
 	TSubclassOf<UMyFirstUserWidget> GameOverWidget;
 
 	bool bIsSkillTreeOpen = false;
+	int m_iSkillPoints = 500;
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
