@@ -7,13 +7,11 @@
 #include "Components/TextBlock.h"
 #include "Components/ProgressBar.h"
 #include "UTAD_UI_FPSCharacter.h"
-#include <Kismet/GameplayStatics.h>
 
 
 void USkillNodes::NativeConstruct()
 {
 	Super::NativeConstruct();
-	CH = Cast<AUTAD_UI_FPSCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
 	BTN_SkillNode->OnPressed.AddDynamic(this, &USkillNodes::Press);
 	BTN_SkillNode->OnReleased.AddDynamic(this, &USkillNodes::Release);
@@ -23,9 +21,11 @@ void USkillNodes::NativeConstruct()
 	BTN_SkillNode->SetVisibility(ESlateVisibility::Visible);
 	PB_SkillUpgrade->SetPercent(0);
 	
+	if (!bLocked)
+	{
 		TXT_SkillName->SetText(FText::FromString(m_sSkillName));
-		PB_SkillUpgrade->SetVisibility(ESlateVisibility::Visible);
-
+		PB_SkillUpgrade->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 void USkillNodes::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {

@@ -20,7 +20,7 @@
 
 AUTAD_UI_FPSCharacter::AUTAD_UI_FPSCharacter()
 {
-	bHasRifle = false;
+	//bHasRifle = false;
 	
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
@@ -100,7 +100,7 @@ void AUTAD_UI_FPSCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::Look);
 		// Open Skill Tree
-		EnhancedInputComponent->BindAction(OpenTreeAction, ETriggerEvent::Started, this, &AUTAD_UI_FPSCharacter::OpenSkillTree);
+		EnhancedInputComponent->BindAction(OpenTreeAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::OpenSkillTree);
 	
 
 	}
@@ -175,38 +175,38 @@ int AUTAD_UI_FPSCharacter::GetMaxHealth()
 	return MaxHealth;
 }
 
-void AUTAD_UI_FPSCharacter::SetHasRifle(bool bNewHasRifle)
-{
-	bHasRifle = bNewHasRifle;
-	PlayerHUDInstance->ShowAll();
-}
-
-bool AUTAD_UI_FPSCharacter::GetHasRifle()
-{
-	return bHasRifle;
-}
-
-void AUTAD_UI_FPSCharacter::SetTotalBullets(int NewTotalBullets)
-{
-	TotalBullets = NewTotalBullets;
-
-	OnTotalBulletsChanged.ExecuteIfBound(TotalBullets);
-}
-
-int AUTAD_UI_FPSCharacter::GetTotalBullets()
-{
-	return TotalBullets;
-}
-
-void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
-{
-	TotalBullets += Bullets;
-}
-
-void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)
-{
-	AttachedWeaponComponent = WeaponComponent;
-}
+//void AUTAD_UI_FPSCharacter::SetHasRifle(bool bNewHasRifle)
+//{
+//	bHasRifle = bNewHasRifle;
+//	PlayerHUDInstance->ShowAll();
+//}
+//
+//bool AUTAD_UI_FPSCharacter::GetHasRifle()
+//{
+//	return bHasRifle;
+//}
+//
+//void AUTAD_UI_FPSCharacter::SetTotalBullets(int NewTotalBullets)
+//{
+//	TotalBullets = NewTotalBullets;
+//
+//	OnTotalBulletsChanged.ExecuteIfBound(TotalBullets);
+//}
+//
+//int AUTAD_UI_FPSCharacter::GetTotalBullets()
+//{
+//	return TotalBullets;
+//}
+//
+//void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
+//{
+//	TotalBullets += Bullets;
+//}
+//
+//void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)
+//{
+//	AttachedWeaponComponent = WeaponComponent;
+//}
 
 void AUTAD_UI_FPSCharacter::OpenSkillTree(const FInputActionValue& Value)
 {
@@ -217,11 +217,15 @@ void AUTAD_UI_FPSCharacter::OpenSkillTree(const FInputActionValue& Value)
 		{
 			SkillTreeInstance->HideTree();
 			bIsSkillTreeOpen = false;
+			PlayerController->SetInputMode(FInputModeGameOnly());
+			PlayerController->bShowMouseCursor = false;
 		}
 		else
 		{
 			SkillTreeInstance->ShowTree();
 			bIsSkillTreeOpen = true;
+			PlayerController->SetInputMode(FInputModeUIOnly());
+			PlayerController->bShowMouseCursor = true;
 		}
 	}
 
