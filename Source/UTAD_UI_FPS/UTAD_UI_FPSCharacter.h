@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "SkillTree.h"
 
 // --------
 #include "UTAD_UI_FPSCharacter.generated.h"
-#include "SkillTree.h"
 
 class UInputComponent;
 class USkeletalMeshComponent;
