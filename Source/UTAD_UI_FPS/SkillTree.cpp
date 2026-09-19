@@ -24,6 +24,6 @@ void USkillTree::ShowTree()
 void USkillTree::NativeConstruct()
 {
 	Super::NativeConstruct();
-	//TXT_Points->SetText(FText::FromString(FString::FromInt(CHInstance->m_iSkillPoints)));
+	TXT_Points->SetText(FText::FromString(FString::FromInt(CHInstance->m_iSkillPoints)));
 }
 
