@@ -54,6 +54,7 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "UI")
 	TObjectPtr<USkillNodes> SN_Dmg3;
 
+
 	UFUNCTION()
 	void HideTree();
 	UFUNCTION()
@@ -62,6 +63,6 @@ public:
 protected:
 	virtual void NativeConstruct() override;
 
-
+	AUTAD_UI_FPSCharacter* CHInstance;
 
 };

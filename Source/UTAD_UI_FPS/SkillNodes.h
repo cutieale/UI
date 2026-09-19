@@ -50,7 +50,7 @@ public:
 	TArray<USkillNodes*> m_aPreviousSkills;
 	UPROPERTY(EditAnywhere, Category = "COST")
 	int32 m_iSkillCost;
-
+	
 	bool bLocked = true;
 	bool bPreviousSkillUnlocked = false;
 
