@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "UTAD_UI_FPSCharacter.h"
-#include "UTAD_UI_FPSProjectile.h"
+
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -20,7 +20,7 @@
 
 AUTAD_UI_FPSCharacter::AUTAD_UI_FPSCharacter()
 {
-	bHasRifle = false;
+	//bHasRifle = false;
 	
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
@@ -48,13 +48,13 @@ void AUTAD_UI_FPSCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//Add Input Mapping Context
-	/*if (PlayerController)
+	if (PlayerController)
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
-	}*/
+	}
 
 	// Setup Player HUD
 	if (PlayerHUDWidget)
@@ -175,38 +175,38 @@ int AUTAD_UI_FPSCharacter::GetMaxHealth()
 	return MaxHealth;
 }
 
-void AUTAD_UI_FPSCharacter::SetHasRifle(bool bNewHasRifle)
-{
-	bHasRifle = bNewHasRifle;
-	PlayerHUDInstance->ShowAll();
-}
-
-bool AUTAD_UI_FPSCharacter::GetHasRifle()
-{
-	return bHasRifle;
-}
-
-void AUTAD_UI_FPSCharacter::SetTotalBullets(int NewTotalBullets)
-{
-	TotalBullets = NewTotalBullets;
-
-	OnTotalBulletsChanged.ExecuteIfBound(TotalBullets);
-}
-
-int AUTAD_UI_FPSCharacter::GetTotalBullets()
-{
-	return TotalBullets;
-}
-
-void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
-{
-	TotalBullets += Bullets;
-}
-
-void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)
-{
-	AttachedWeaponComponent = WeaponComponent;
-}
+//void AUTAD_UI_FPSCharacter::SetHasRifle(bool bNewHasRifle)
+//{
+//	bHasRifle = bNewHasRifle;
+//	PlayerHUDInstance->ShowAll();
+//}
+//
+//bool AUTAD_UI_FPSCharacter::GetHasRifle()
+//{
+//	return bHasRifle;
+//}
+//
+//void AUTAD_UI_FPSCharacter::SetTotalBullets(int NewTotalBullets)
+//{
+//	TotalBullets = NewTotalBullets;
+//
+//	OnTotalBulletsChanged.ExecuteIfBound(TotalBullets);
+//}
+//
+//int AUTAD_UI_FPSCharacter::GetTotalBullets()
+//{
+//	return TotalBullets;
+//}
+//
+//void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
+//{
+//	TotalBullets += Bullets;
+//}
+//
+//void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)
+//{
+//	AttachedWeaponComponent = WeaponComponent;
+//}
 
 void AUTAD_UI_FPSCharacter::OpenSkillTree(const FInputActionValue& Value)
 {
